@@ -10,26 +10,21 @@ class CatalogueScreen extends StatefulWidget {
 }
 
 class _CatalogueScreenState extends State<CatalogueScreen> {
-  final List<String> genres = [
-    'Tous',
-    'Roman',
-    'Science',
-    'Histoire',
-    'Jeunesse',
-    'Informatique',
-  ];
+  final List<String> genres = ['Tous', 'Roman', 'Science', 'Histoire', 'Jeunesse', 'Informatique'];
   String genreSelectionne = 'Tous';
 
   @override
   Widget build(BuildContext context) {
+    // Filtrage simple
     final livresFiltres = genreSelectionne == 'Tous'
         ? livres
         : livres.where((l) => l.genre == genreSelectionne).toList();
 
     return Column(
       children: [
+        // ListView horizontal de filtrage (Q2 demandée)
         SizedBox(
-          height: 50,
+          height: 48,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: genres.length,
@@ -37,30 +32,37 @@ class _CatalogueScreenState extends State<CatalogueScreen> {
               final genre = genres[index];
               final isSelected = genre == genreSelectionne;
               return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 6.0,
-                  vertical: 8.0,
-                ),
-                child: ChoiceChip(
-                  label: Text(genre),
-                  selected: isSelected,
-                  onSelected: (selected) {
-                    setState(() {
-                      genreSelectionne = genre;
-                    });
-                  },
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+                child: isSelected
+                    ? ElevatedButton(
+                        onPressed: () {},
+                        child: Text(genre),
+                      )
+                    : OutlinedButton(
+                        onPressed: () {
+                          setState(() {
+                            genreSelectionne = genre;
+                          });
+                        },
+                        child: Text(genre),
+                      ),
               );
             },
           ),
         ),
+
+        // ListView des cartes de livres
         Expanded(
           child: ListView.builder(
             itemCount: livresFiltres.length,
             itemBuilder: (context, index) {
               return LivreCard(
                 livre: livresFiltres[index],
-                onFavoriChanged: () => setState(() {}),
+                onFavoriTap: () {
+                  setState(() {
+                    livresFiltres[index].favori = !livresFiltres[index].favori;
+                  });
+                },
               );
             },
           ),
