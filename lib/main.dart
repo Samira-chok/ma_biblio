@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/parametres_screen.dart';
 import 'screens/catalogue_screen.dart';
+import 'screens/galerie_screen.dart';
 import 'screens/ma_liste_screen.dart';
 
 void main() {
@@ -29,15 +30,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // Index de l'onglet actif (0: Catalogue, 1: Galerie, 2: Ma liste)
   int _currentIndex = 0;
 
-  final List<Widget> _ecrans = const [CatalogueScreen(), MaListeScreen()];
+  // Titres correspondants à chaque onglet dans l'AppBar
+  final List<String> _titres = const [
+    'Catalogue',
+    'Galerie',
+    'Ma liste de lecture',
+  ];
+
+  // Les 3 écrans reliés aux boutons du bas
+  final List<Widget> _ecrans = const [
+    CatalogueScreen(),
+    GalerieScreen(),
+    MaListeScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_currentIndex == 0 ? 'Catalogue' : 'Ma liste de lecture'),
+        title: Text(_titres[_currentIndex]),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -64,6 +78,10 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.menu_book),
             label: 'Catalogue',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.grid_view),
+            label: 'Galerie',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.checklist),
