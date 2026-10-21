@@ -6,10 +6,13 @@ class ParametresScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Paramètres')),
-      // Remplacement de Column par ListView (Q2.1)
+      appBar: AppBar(
+        title: const Text('Paramètres'),
+      ),
+      // ListView pour éviter l'overflow jaune/noir en mode paysage (Q2.1)
       body: ListView(
         children: [
+          // Q1.1 & Q1.2 : Mon profil avec SnackBar
           ListTile(
             leading: const Icon(Icons.person),
             title: const Text('Mon profil'),
@@ -21,6 +24,8 @@ class ParametresScreen extends StatelessWidget {
               );
             },
           ),
+
+          // Q1.5 : Notifications personnalisé avec forme et couleur
           ListTile(
             leading: const Icon(Icons.notifications),
             title: const Text('Notifications'),
@@ -33,6 +38,8 @@ class ParametresScreen extends StatelessWidget {
             trailing: const Icon(Icons.chevron_right),
             onTap: () {},
           ),
+
+          // Q1.3 : Langue
           ListTile(
             leading: const Icon(Icons.language),
             title: const Text('Langue'),
@@ -40,6 +47,8 @@ class ParametresScreen extends StatelessWidget {
             trailing: const Icon(Icons.chevron_right),
             onTap: () {},
           ),
+
+          // Q1.4 : À propos (dense, isThreeLine et disabled)
           const ListTile(
             leading: Icon(Icons.info),
             title: Text('À propos'),
