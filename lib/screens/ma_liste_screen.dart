@@ -9,18 +9,16 @@ class MaListeScreen extends StatefulWidget {
 }
 
 class _MaListeScreenState extends State<MaListeScreen> {
-  // Calcule l'état global : true (tous lus), false (aucun lu), null (partiellement lu -> tristate)
+  // Calcul de l'état tristate : true, false, ou null
   bool? get _etatGlobal {
-    final tousLus = livres.every((livre) => livre.lu);
-    final aucunLu = livres.every((livre) => !livre.lu);
-
+    final tousLus = livres.every((l) => l.lu);
+    final aucunLu = livres.every((l) => !l.lu);
     if (tousLus) return true;
     if (aucunLu) return false;
-    return null; // état intermédiaire
+    return null; // État intermédiaire (tristate)
   }
 
-  // Coche ou décoche l'ensemble des livres
-  void _toggleTous(bool? valeur) {
+  void _cocherTout(bool? valeur) {
     setState(() {
       final cible = valeur ?? false;
       for (var livre in livres) {
@@ -35,21 +33,18 @@ class _MaListeScreenState extends State<MaListeScreen> {
 
     return Column(
       children: [
-        // Case globale « Tous » avec tristate
+        // Case globale « Tous »
         CheckboxListTile(
-          title: const Text(
-            'Tous les livres',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+          title: const Text('Tous les livres', style: TextStyle(fontWeight: FontWeight.bold)),
           subtitle: Text('$nbLus sur ${livres.length} lus'),
           tristate: true,
           value: _etatGlobal,
-          onChanged: _toggleTous,
+          onChanged: _cocherTout,
           controlAffinity: ListTileControlAffinity.leading,
         ),
-        const Divider(height: 1, thickness: 1.5),
+        const Divider(height: 1),
 
-        // Liste des livres avec case à cocher individuelle
+        // Liste avec CheckboxListTile individuel
         Expanded(
           child: ListView.separated(
             itemCount: livres.length,
