@@ -7,20 +7,18 @@ class GalerieScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GridView.builder(
-        itemCount: livres.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,          // 2 colonnes
-          crossAxisSpacing: 10,       // espacement horizontal
-          mainAxisSpacing: 10,        // espacement vertical
-          childAspectRatio: 0.75,     // proportion hauteur / largeur
-        ),
-        itemBuilder: (context, index) {
-          return LivreGridItem(livre: livres[index]);
-        },
+    return GridView.builder(
+      padding: const EdgeInsets.all(8),
+      itemCount: livres.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+        childAspectRatio: 0.8,
       ),
+      itemBuilder: (context, index) {
+        return LivreGridItem(livre: livres[index]);
+      },
     );
   }
 }

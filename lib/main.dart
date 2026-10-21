@@ -16,7 +16,10 @@ class MaBiblioApp extends StatelessWidget {
     return MaterialApp(
       title: 'MaBiblio',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.indigo),
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: Colors.indigo,
+      ),
       home: const HomePage(),
     );
   }
@@ -30,17 +33,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // Index de l'onglet actif (0: Catalogue, 1: Galerie, 2: Ma liste)
   int _currentIndex = 0;
 
-  // Titres correspondants à chaque onglet dans l'AppBar
   final List<String> _titres = const [
     'Catalogue',
     'Galerie',
     'Ma liste de lecture',
   ];
 
-  // Les 3 écrans reliés aux boutons du bas
   final List<Widget> _ecrans = const [
     CatalogueScreen(),
     GalerieScreen(),
@@ -58,9 +58,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => const ParametresScreen(),
-                ),
+                MaterialPageRoute(builder: (context) => const ParametresScreen()),
               );
             },
           ),
