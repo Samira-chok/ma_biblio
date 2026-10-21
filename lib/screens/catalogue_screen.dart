@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/livres_data.dart';
-import '../models/livre.dart';
+import '../widgets/livre_card.dart';
 
 class CatalogueScreen extends StatefulWidget {
   const CatalogueScreen({super.key});
@@ -20,40 +20,14 @@ class _CatalogueScreenState extends State<CatalogueScreen> {
   ];
   String genreSelectionne = 'Tous';
 
-  Widget _buildLivreTile(Livre livre) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundColor: livre.couleur,
-        child: Text(
-          livre.titre.isNotEmpty ? livre.titre[0] : '?',
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      title: Text(livre.titre),
-      subtitle: Text('${livre.auteur} – ${livre.annee}'),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(livre.note.toString()),
-          const Icon(Icons.star, color: Colors.amber, size: 20),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    // Filtrage des livres selon le genre sélectionné
     final livresFiltres = genreSelectionne == 'Tous'
         ? livres
         : livres.where((l) => l.genre == genreSelectionne).toList();
 
     return Column(
       children: [
-        // 1. Liste horizontale des filtres de genre
         SizedBox(
           height: 50,
           child: ListView.builder(
@@ -80,14 +54,14 @@ class _CatalogueScreenState extends State<CatalogueScreen> {
             },
           ),
         ),
-
-        // 2. Liste verticale des livres avec séparateurs
         Expanded(
-          child: ListView.separated(
+          child: ListView.builder(
             itemCount: livresFiltres.length,
-            separatorBuilder: (context, index) => const Divider(height: 1),
             itemBuilder: (context, index) {
-              return _buildLivreTile(livresFiltres[index]);
+              return LivreCard(
+                livre: livresFiltres[index],
+                onFavoriChanged: () => setState(() {}),
+              );
             },
           ),
         ),
